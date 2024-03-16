@@ -22,7 +22,7 @@ export default function Hero(){
    <div className="flex gap-4 text-sm">
     
     <button className="bg-primary uppercase flex items-center gap-2
-     text-white px-4 py-2 rounded-full "> 
+     text-red px-4 py-2 rounded-full "> 
     Order now
     <Right/>
     </button>
