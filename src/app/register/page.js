@@ -4,12 +4,17 @@ import { useState } from "react";
 export default function RegsterPage(){
     const [email, setEmail] = useState('');
     const [password, setPassword ] =useState('');
-    function handleFormSubmit(ev){
+    const[creatingUser, setCreatingUser] =useState(false);
+    const[userCreated, setUserCreated] = useState(false);
+    async function handleFormSubmit(ev){
         ev.preventDefault();
-        fetch('/api/register', {method:'POST',
+        await fetch('/api/register', {method:'POST',
     body:JSON.stringify({email,password}),
     headers:{'Content-Type': 'application/json'},
-})
+});
+setCreatingUser(false);
+
+
     }
     return(
        <section className="mt-8">
@@ -18,10 +23,13 @@ export default function RegsterPage(){
         </h1>
         <form className="block max-w-xs mx-auto" onSubmit={handleFormSubmit}>
             <input type="email" placeholder="email" value={email}
+            disabled={creatingUser}
             onChange={ev => setEmail(ev.target.value)} />
             <input type="password" placeholder="password" value={password}
+            disabled={creatingUser}
             onChange={ev => setPassword(ev.target.value)}/>
-            <button type="submit"  >Register </button>
+            <button type="submit"  
+            disabled={creatingUser} >Register </button>
             <div className="my-4 text-center text-gray-500">
                 or login with provider
             </div>
