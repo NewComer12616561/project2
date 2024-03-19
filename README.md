@@ -1,8 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
+Remember:
+Have Node.js installed 
 ## Getting Started
 
-First, run the development server:
+Open Visual Studio Code Terminal then run 1 of these cmd:
 
 ```bash
 npm run dev
