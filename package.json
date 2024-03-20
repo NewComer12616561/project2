@@ -11,6 +11,7 @@
   "dependencies": {
     "@auth/mongodb-adapter": "^2.5.0",
     "bcrypt": "^5.1.1",
+    "fs": "^0.0.1-security",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.2",
     "next": "14.1.3",
