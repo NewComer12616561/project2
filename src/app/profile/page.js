@@ -3,23 +3,49 @@
 import { useSession } from "next-auth/react";
 import Image from 'next/image';
 import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ProfilePage(){
     const session = useSession();
-    const[userName, setUserName] =useState(session?.data?.user?.name || '');
-
+    const[userName, setUserName] =useState( '');
+    const [saved, setSaved] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
     const {status}= session;
+    
+    useEffect(()=>{
+        if(status==='authenticated'){
+            setUserName(session.data.user.name)
+        }
+    }, [session ,status] );
 
     async function handleProfileInfoUpdate(ev){
         ev.preventDefault();
+        setSaved(false);
+        setIsSaving(true);
         const response = await fetch('/api/profile/', {
             method:'PUT',
-            headers:{'Content-Type':
-            'application/json'},
+            headers:{'Content-Type':'application/json'},
             body: JSON.stringify({name:userName}),
         });
+        setIsSaving(false);
+        if(response.ok){
+            setSaved(true);
+        }
 
+    }
+    //Primarly Picture
+    async function handleFileChange(ev){
+       const files = ev.files;
+       if(files?.length> 0 ){
+        const data = new FormData;
+        data.set('files', files)
+        fetch('/api/upload',{
+            method:'POST',
+            body: data,
+            headers: {'Content-Type':'multipart/form-data'}
+        })
+
+       }
     }
     
 
@@ -36,7 +62,16 @@ export default function ProfilePage(){
     return(
         <section className="mt-8">
             <h1 className="text-center text-primary mb-4">Profile</h1>
+           
         <div className="max-w-md mx-auto ">
+            {saved &&(
+                <h2 className="text-center bg-green-100 p-4 rounded-lg border
+        border-green-300">Profile updated</h2>
+            )}
+            {isSaving&& (
+                <h2 className="text-center bg-blue-100 p-4 rounded-lg border
+                border-blue-300">Updating...</h2>
+             )}
             <div className="flex gap-4 items-center">
                 <div>
                    
@@ -44,9 +79,13 @@ export default function ProfilePage(){
                     
                     <Image className="rounded-lg w-full h-full mb-1" src={userImage} width={259} height={250}
                  alt={'avatar'} />
-                   
+                <label>
+                <input type="file" className="hidden" onChange={handleFileChange}/>
+                <span className=" block border border-gray-300  
+                rounded-lg p-2 text-center cursor-pointer">Edit Image</span>
+                </label>   
                 
-                <button type="button">Edit</button>
+                
                 </div>
                 </div>
                 <form className="grow" onSubmit={handleProfileInfoUpdate}>
