@@ -8,13 +8,15 @@ import { useEffect, useState } from "react";
 export default function ProfilePage(){
     const session = useSession();
     const[userName, setUserName] =useState( '');
+    const[image, setImage] =useState('');
     const [saved, setSaved] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const {status}= session;
     
     useEffect(()=>{
         if(status==='authenticated'){
-            setUserName(session.data.user.name)
+            setUserName(session.data.user.name);
+            setImage(session.data.user.image);
         }
     }, [session ,status] );
 
@@ -35,16 +37,16 @@ export default function ProfilePage(){
     }
     //Primarly Picture
     async function handleFileChange(ev){
-       const files = ev.files;
-       if(files?.length> 0 ){
+       const files = ev.target.files;
+       if(files?.length === 1 ){
         const data = new FormData;
-        data.set('files', files)
-        fetch('/api/upload',{
+        data.set('file', files[0])
+        const response = await fetch('/api/upload',{
             method:'POST',
             body: data,
-            headers: {'Content-Type':'multipart/form-data'}
-        })
-
+        });        
+        const link = await response.json();
+        setImage(link);
        }
     }
     
@@ -57,7 +59,7 @@ export default function ProfilePage(){
         return redirect('/login');
     }
 
-    const userImage =session.data.user.image;
+   
 
     return(
         <section className="mt-8">
@@ -76,9 +78,11 @@ export default function ProfilePage(){
                 <div>
                    
                 <div className=" px-2 rounded-lg relative">
+                    {image &&(
+                        <Image className="rounded-lg w-full h-full mb-1" src={image} width={259} height={250}
+                        alt={'avatar'} />
+                    )}
                     
-                    <Image className="rounded-lg w-full h-full mb-1" src={userImage} width={259} height={250}
-                 alt={'avatar'} />
                 <label>
                 <input type="file" className="hidden" onChange={handleFileChange}/>
                 <span className=" block border border-gray-300  
