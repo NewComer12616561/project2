@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import Image from 'next/image';
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
+import InfoBox from "../../components/layout/InfoBox";
+import SuccessBox from "../../components/layout/SuccessBox";
 
 export default function ProfilePage(){
     const session = useSession();
@@ -11,6 +13,7 @@ export default function ProfilePage(){
     const[image, setImage] =useState('');
     const [saved, setSaved] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
     const {status}= session;
     
     useEffect(()=>{
@@ -27,7 +30,7 @@ export default function ProfilePage(){
         const response = await fetch('/api/profile/', {
             method:'PUT',
             headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({name:userName}),
+            body: JSON.stringify({name:userName, image}),
         });
         setIsSaving(false);
         if(response.ok){
@@ -41,12 +44,14 @@ export default function ProfilePage(){
        if(files?.length === 1 ){
         const data = new FormData;
         data.set('file', files[0])
+        setIsUploading(true);
         const response = await fetch('/api/upload',{
             method:'POST',
             body: data,
         });        
         const link = await response.json();
         setImage(link);
+        setIsUploading(false);
        }
     }
     
@@ -67,17 +72,18 @@ export default function ProfilePage(){
            
         <div className="max-w-md mx-auto ">
             {saved &&(
-                <h2 className="text-center bg-green-100 p-4 rounded-lg border
-        border-green-300">Profile updated</h2>
+               <SuccessBox>Profile updated</SuccessBox>
             )}
             {isSaving&& (
-                <h2 className="text-center bg-blue-100 p-4 rounded-lg border
-                border-blue-300">Updating...</h2>
+                <InfoBox>Updating</InfoBox>
+             )}
+             {isUploading &&(
+                 <InfoBox>Updating image...</InfoBox>
              )}
             <div className="flex gap-4 items-center">
                 <div>
                    
-                <div className=" px-2 rounded-lg relative">
+                <div className=" p-2 rounded-lg relative max-w-[120px]">
                     {image &&(
                         <Image className="rounded-lg w-full h-full mb-1" src={image} width={259} height={250}
                         alt={'avatar'} />

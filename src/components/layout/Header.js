@@ -17,7 +17,7 @@ export default function Header(){
         
         <nav className="flex items-center gap-8 text-gray-500 semibold">
         <Link className="text-primary font-semibold " href="/">
-          ST PIZZA
+          PIZZA STORE
         </Link>
           <Link href={'/'}>Home</Link>
           <Link href={''}>Menu</Link>
