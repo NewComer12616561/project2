@@ -4,8 +4,10 @@ import { useSession } from "next-auth/react";
 import Image from 'next/image';
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 import toast from "react-hot-toast";
+import { UserTabs } from "../../components/layout/UserTabs";
 
 export default function ProfilePage(){
     const session = useSession();
@@ -14,10 +16,10 @@ export default function ProfilePage(){
     const[image, setImage] =useState('');
     const[phone, setPhone] =useState('');
     const [streetAddress, setStreetAddress] = useState('');
-    
     const[postalCode, setPostalCode] =useState('');
     const[city, setCity] =useState('');
     const[country, setCountry] =useState('');
+    const[isAdmin, setIsAdmin]=useState(false);
     const {status}= session;
     
     useEffect(()=>{
@@ -27,11 +29,12 @@ export default function ProfilePage(){
             fetch('/api/profile').then(response =>{
                 response.json().then(data =>{
                     setPhone(data.phone);
-                  //something went wrong with street address
+                  //something went wrong with street address ->Typo on models/User ->Missing d char in address[fixed]
                     setStreetAddress(data.streetAddress);
                     setPostalCode(data.postalCode);
                     setCity(data.city);
                     setCountry(data.country);
+                    setIsAdmin(data.admin);
                     
                 });
             })
@@ -107,9 +110,8 @@ export default function ProfilePage(){
 
     return(
         <section className="mt-8">
-            <h1 className="text-center text-primary text-4xl mb-4">Profile</h1>
-           
-        <div className="max-w-md mx-auto ">
+            <UserTabs isAdmin={isAdmin}/>
+        <div className="max-w-md mx-auto mt-8 ">
             <div className="flex gap-4 ">
                 <div>
                    
