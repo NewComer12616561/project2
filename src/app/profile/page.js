@@ -20,6 +20,7 @@ export default function ProfilePage(){
     const[city, setCity] =useState('');
     const[country, setCountry] =useState('');
     const[isAdmin, setIsAdmin]=useState(false);
+    const[profileFetchedd, setProfileFetched] = useState(false);
     const {status}= session;
     
     useEffect(()=>{
@@ -35,6 +36,7 @@ export default function ProfilePage(){
                     setCity(data.city);
                     setCountry(data.country);
                     setIsAdmin(data.admin);
+                    setProfileFetched(true);
                     
                 });
             })
@@ -100,7 +102,7 @@ export default function ProfilePage(){
     }
     
 
-    if(status === 'loading'){
+    if(status === 'loading' || !profileFetchedd){
         return 'Loading....';
     }
 
