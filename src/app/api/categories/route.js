@@ -1,4 +1,4 @@
-import { response } from "express";
+
 import { Category } from "../../../models/Categories";
 
 export async function POST(req){

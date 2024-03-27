@@ -1,11 +1,9 @@
 'use client';
 
 import { useSession } from "next-auth/react";
-import Image from 'next/image';
 import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
-import Link from "next/link";
-
+import EditableImage from "../../components/layout/EditableImage";
 import toast from "react-hot-toast";
 import { UserTabs } from "../../components/layout/UserTabs";
 
@@ -73,33 +71,8 @@ export default function ProfilePage(){
             error:'Error',
         });
     }
-    //Primarly Picture
-    async function handleFileChange(ev){
-       const files = ev.target.files;
-       if(files?.length === 1 ){
-        const data = new FormData;
-        data.set('file', files[0]);
-
-        const uploadPromise =  fetch('/api/upload',{
-                method:'POST',
-                body: data,
-            }).then (response=> {
-                if (response.ok) {
-                    return response.json().then(link => {
-                    setImage(link);
-                    })
-                }
-                throw new Error('Something went wrong');
-            });            
-        
-       await toast.promise(uploadPromise,{ 
-        loading:'Uploading...',
-        success:'Upload saved',
-        error:'Upload Error',
-    });       
-        
-       }
-    }
+    
+   
     
 
     if(status === 'loading' || !profileFetchedd){
@@ -118,16 +91,7 @@ export default function ProfilePage(){
                 <div>
                    
                 <div className=" p-2 rounded-lg relative max-w-[120px]">
-                    {image &&(
-                        <Image className="rounded-lg w-full h-full mb-1" src={image} width={259} height={250}
-                        alt={'avatar'} />
-                    )}
-                    
-                <label>
-                <input type="file" className="hidden" onChange={handleFileChange}/>
-                <span className=" block border border-gray-300  
-                rounded-lg p-2 text-center cursor-pointer">Edit Image</span>
-                </label>   
+                 <EditableImage link={image} setLink={setImage}/>
                 
                 
                 </div>
