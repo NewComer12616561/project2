@@ -1,13 +1,21 @@
 import EditableImage from "@/components/layout/EditableImage";
-import { useState } from "react";
+import { use, useState } from "react";
+import MenuItemPriceProps from "@/components/layout/MenuItemPriceProps";
+
 
 export default function MenuItemForm({onSubmit, menuItem}){
     const [image, setImage] = useState(menuItem?.image || '');
     const [name, setName] = useState(menuItem?.name || '');
     const [description, setDescription] = useState(menuItem?.description || '');
     const [basePrice, setBasePrice] = useState(menuItem?.basePrice || '');
+    const [sizes, setSizes] = useState(menuItem?.sizes || []);
+    const [extraIngredientPrices ,setExtraIngredientPrices] = useState(menuItem
+        ?.extraIngredientPrices || []);
+
     return(
-        <form onSubmit={ev=> onSubmit(ev, {image,name,description,basePrice})}
+        <form onSubmit={ev=> 
+            onSubmit(ev, 
+                {image,name,description,basePrice, sizes, extraIngredientPrices})}
         className="mt-8 max-w-md mx-auto">
             <div 
             className="grid items-start gap-2 "
@@ -31,7 +39,16 @@ export default function MenuItemForm({onSubmit, menuItem}){
                     type="text"
                     value={basePrice}
                     onChange={ev => setBasePrice(ev.target.value)}/>
-                    <button  type ="submit">Save</button>
+                    <MenuItemPriceProps name ={'Sizes'} 
+                    addLabel={'Add item size'} 
+                    props={sizes} setProps={setSizes} />
+
+                    <MenuItemPriceProps name ={'Extra ingredients'}
+                    addLabel={'Add ingredient prices'} 
+                    props={extraIngredientPrices} 
+                    setProps={setExtraIngredientPrices} />
+
+                    <button type ="submit">Save</button>
                 </div>
             </div>
         </form>
