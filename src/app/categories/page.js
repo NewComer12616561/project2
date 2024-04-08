@@ -54,8 +54,30 @@ export default function CategoriesPage(){
             :'Category created',
             error:'Error, sorry',
 
+        }); 
+    }
+
+    async function handleDeleteClick(_id){
+        const promise = new Promise(async(resolve, reject) => {
+            const response = await fetch('/api/categories?_id='+_id, {
+                method:'DELETE',
+            });
+            if(response.ok){
+                resolve();
+            } else {
+                    reject();
+                }            
         });
+
        
+
+         toast.promise(promise,{
+            loading:'Deleting category...',
+            success:'Category deleted',
+            error:'Error',
+         });
+
+         fetchCategories();
     }
     
     if(profileLoading){
@@ -92,17 +114,23 @@ export default function CategoriesPage(){
             </form>
             <ul>
             <div>
-                <h2 className="mt-8 text-sm text-gray-500">Edit category:</h2>
+                <h2 className="mt-8 text-sm text-gray-500">All existing category:</h2>
                 {categories?.length >0 && categories.map(c =>(
-                    <button 
-                    onClick={() => {
+                    <div 
+                    className="bg-gray-100 rounded-xl p-2 px-4 flex gap-1
+                     items-center mb-1">            
+                    <div className=" grow ">{c.name}</div>
+                    <div className="flex gap-1">
+                    <button type="button"
+                        onClick={() => {
                         seteditedCategory(c);
                         setCategoryName(c.name);}
-                    }
-                    className=" rounded-xl p-2 px-4 flex gap-1
-                    cursor-pointer mb-1">            
-                    <span>{c.name}</span> 
-                    </button>
+                                    }>Edit</button> 
+                    <button 
+                    onClick={()=> handleDeleteClick(c._id)}
+                    type="button">Delete</button>
+                    </div>    
+                    </div>
 
                 ))}
             </div>
