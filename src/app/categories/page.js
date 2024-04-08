@@ -69,8 +69,6 @@ export default function CategoriesPage(){
                 }            
         });
 
-       
-
          toast.promise(promise,{
             loading:'Deleting category...',
             success:'Category deleted',
@@ -105,10 +103,18 @@ export default function CategoriesPage(){
                     value={CategoryName}
                     onChange={ev => setCategoryName(ev.target.value)}/>
                     </div>
-                    <div className="pb-2">
+                    <div className="pb-2 flex gap-2">
                     <button className="border border-primary"type="submit">
                         {editedCategory? 'Update':'Create'}
                     </button>
+                    
+                    <button type="button"
+                    onClick={()=> {// Handling Cancel button inside Categories
+                        seteditedCategory(null);
+                        setCategoryName('')}}>
+                        Cancel
+                    </button>
+                    
                     </div>
                 </div>
             </form>

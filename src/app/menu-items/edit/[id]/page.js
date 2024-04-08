@@ -51,6 +51,26 @@ export default function EditMenuItemPage(){
 
         setRedirectToItems(true);
     }
+
+    async function handleDeleteClick(){
+        const promise = new Promise(async(resolve, reject) => {
+            const res = await fetch('/api/menu-items?_id='+id, {
+                method:'DELETE',
+            });
+            if(res.ok){
+                resolve();
+            } else {
+                    reject();
+                }            
+        });
+
+         await toast.promise(promise,{
+            loading:'Deleting menu item...',
+            success:'Menu item deleted',
+            error:'Error',
+        })
+        setRedirectToItems(true);
+    }
   
     if (redirectToItems) {
       return redirect('/menu-items');
@@ -72,7 +92,12 @@ export default function EditMenuItemPage(){
                 <Left/><span>Return to Menu items </span> 
             </Link>
         </div>
-        <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit}></MenuItemForm>
+        <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit}/>
+        <div className="max-w-md mx-auto mt-2">
+        <div className="max-w-xs ml-auto pl-4">
+          <button onClick={handleDeleteClick}>Delete this item</button>
+        </div>
+      </div>
     </section>
     );
 }
