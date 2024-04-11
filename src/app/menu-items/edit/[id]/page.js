@@ -4,6 +4,7 @@ import { useProfile } from "../../../../components/UseProfile";
 import { useEffect, useState } from "react";
 import { UserTabs } from "../../../../components/layout/UserTabs";
 import MenuItemForm from "@/components/layout/MenuItemForm";
+import DeleteButton from "@/components/DeleteButton";
 
 
 import Link from "next/link";
@@ -87,7 +88,7 @@ export default function EditMenuItemPage(){
     return (
         <section className="mt-8">
         <UserTabs isAdmin={true}/>
-        <div className="max-w-md mx-auto mt-8">
+        <div className="max-w-2xl mx-auto mt-8">
             <Link href={'/menu-items'} className="button">
                 <Left/><span>Return to Menu items </span> 
             </Link>
@@ -95,7 +96,9 @@ export default function EditMenuItemPage(){
         <MenuItemForm menuItem={menuItem} onSubmit={handleFormSubmit}/>
         <div className="max-w-md mx-auto mt-2">
         <div className="max-w-xs ml-auto pl-4">
-          <button onClick={handleDeleteClick}>Delete this item</button>
+            <DeleteButton label="Delete this item"
+            onDelete={handleDeleteClick}></DeleteButton>
+        
         </div>
       </div>
     </section>

@@ -1,5 +1,5 @@
 import EditableImage from "@/components/layout/EditableImage";
-import { use, useState } from "react";
+import {  useEffect, useState } from "react";
 import MenuItemPriceProps from "@/components/layout/MenuItemPriceProps";
 
 
@@ -9,14 +9,25 @@ export default function MenuItemForm({onSubmit, menuItem}){
     const [description, setDescription] = useState(menuItem?.description || '');
     const [basePrice, setBasePrice] = useState(menuItem?.basePrice || '');
     const [sizes, setSizes] = useState(menuItem?.sizes || []);
+    const [category, setCategory] = useState(menuItem?.category || '');
+    const [categories, setCategories] = useState([]);
     const [extraIngredientPrices ,setExtraIngredientPrices] = useState(menuItem
         ?.extraIngredientPrices || []);
+    
+//Function to display all existing categories
+useEffect(() => {
+    fetch('/api/categories').then(res => {
+      res.json().then(categories => {
+        setCategories(categories);
+      });
+    });
+  }, []);
 
     return(
         <form onSubmit={ev=> 
             onSubmit(ev, 
-                {image,name,description,basePrice, sizes, extraIngredientPrices})}
-        className="mt-8 max-w-md mx-auto">
+                {image,name,description,basePrice, sizes, extraIngredientPrices,category,})}
+        className="mt-8 max-w-2xl mx-auto">
             <div 
             className="grid items-start gap-2 "
             style={{gridTemplateColumns:'.3fr .7fr'}}>
@@ -34,6 +45,12 @@ export default function MenuItemForm({onSubmit, menuItem}){
                     type="text"
                     value={description}
                     onChange={ev => setDescription(ev.target.value)}/>
+                    <labe>Category</labe>
+                    <select value={category} onChange={ev =>setCategory(ev.target.value)}>
+                        {categories?.length >0 && categories.map(c => (
+                           <option value={c._id}>{c.name}</option> 
+                        ))}
+                    </select>
                     <label>Base price</label>
                     <input 
                     type="text"

@@ -3,6 +3,7 @@ import { UserTabs } from "@/components/layout/UserTabs";
 import { useEffect, useState } from "react";
 import {useProfile} from "@/components/UseProfile";
 import toast from "react-hot-toast";
+import DeleteButton from "@/components/DeleteButton";
 
 
 export default function CategoriesPage(){
@@ -87,7 +88,7 @@ export default function CategoriesPage(){
     }
 
     return(
-        <section className="mt-8 max-w-lg mx-auto">
+        <section className="mt-8 max-w-2xl mx-auto">
             <UserTabs isAdmin={true}/>
             <form className="mt-8" onSubmit={handleCategorySubmit}>
                 <div className="flex gap-2 items-end">
@@ -132,9 +133,9 @@ export default function CategoriesPage(){
                         seteditedCategory(c);
                         setCategoryName(c.name);}
                                     }>Edit</button> 
-                    <button 
-                    onClick={()=> handleDeleteClick(c._id)}
-                    type="button">Delete</button>
+                   <DeleteButton 
+                   label="Delete" 
+                   onDelete={ () => handleDeleteClick(c._id)}></DeleteButton>
                     </div>    
                     </div>
 
