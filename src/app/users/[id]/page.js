@@ -11,16 +11,20 @@ export default function EditUserPage(){
     const {id} = useParams();
 
     useEffect(() => {
-        fetch('/api/users').then(res => {
-          res.json().then(users => {
-            users.find(u => u._id === id);
-            setUser(user);
-          });
-        })
-      }, []);
+      fetch('/api/profile?_id='+id).then(res => {
+        res.json().then(user => {
+          setUser(user);
+        });
+      })
+    }, []);
 
     function handleSaveButtonClick(ev, data){
-
+      ev.preventDefault();
+      fetch('/api/profile',{
+        method:'PUT',
+        headers: {'Content-Type':'application/json'},
+        body:JSON.stringify({...data,_id:id},)
+      })
     }
 
     
