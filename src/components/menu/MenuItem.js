@@ -3,6 +3,7 @@ import { CartContext } from "@/components/AppContext";
 import toast from "react-hot-toast";
 import MenuItemTile from "@/components/menu/MenuItemTile";
 import Image from "next/image";
+import FlyingButton from "react-flying-item"
 
 export function MenuItem(menuItem){
         const {image,name,description,basePrice,
@@ -15,16 +16,26 @@ export function MenuItem(menuItem){
         const [showPopup, setShowPopup] =useState(false);
         
 
-    function handleAddToCartButtonClick(){
+    async function handleAddToCartButtonClick(){
+        
         const hasOptions = sizes.length > 0 || extraIngredientPrices.length > 0;
+        
         if(hasOptions && !showPopup){
+            
             setShowPopup(true);
             return;
         }
 
             addToCart(menuItem, selectedSize, selectedExtras);
+            await new Promise(resolve => setTimeout(resolve, 1000));
+           
             setShowPopup(false);
-            toast.success('Item added to Cart');     
+    
+           
+            
+            toast.success('Item added to Cart',{
+                position:"top-right",
+            });     
             }
     
 
@@ -95,10 +106,20 @@ export function MenuItem(menuItem){
                                  ))}
                               </div>
                             )}
-                       <button 
-                       onClick={handleAddToCartButtonClick}
-                       className="primary sticky bottom-2" 
-                       type="button">Add to cart ${selectedPrice}</button>
+                    
+                       <FlyingButton 
+                       target-top={'5%'} 
+                       targetLeft={'95%'}
+                       src={image}>
+                        <div 
+                        onClick={handleAddToCartButtonClick}
+                        className="primary sticky bottom-2">
+                            Add to cart ${selectedPrice}
+                        </div>
+                       
+                       </FlyingButton>
+                       
+                       
                        <button className="mt-2"
                        onClick={()=> setShowPopup(false)}>
                         Cancel</button>
