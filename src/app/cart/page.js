@@ -41,6 +41,7 @@ export default function CartPage(){
     }
 
     async function proceedToCheckout(ev){
+        ev.preventDefault();
         //Grab address and cart items 
         const response = await fetch('/api/checkout',{
             method: 'POST',
@@ -52,10 +53,11 @@ export default function CartPage(){
 
         });
         const link = response.json();
-        window.location = link;
+       // window.location = link;
         // then redirect to Stripe
        
     }
+   // console.log({cartProducts});
 
 
     return (
