@@ -19,11 +19,11 @@ export async function POST(req){
   
     if(event.type === 'checkout.session.completed'){
        console.log(event);
-       const orderId =event?.data?.object?.metadata?.orderId;
-       const isPaid =  event?.data?.object?.payment_status === 'paid';
-       if(isPaid){
-        Order.updateOne({_id:orderId},{paid:true})
-       }
+       const orderId = event?.data?.object?.metadata?.orderId;
+        const isPaid = event?.data?.object?.payment_status === 'paid';
+       if (isPaid) {
+        await Order.updateOne({_id:orderId}, {paid:true});
+      }
     } 
     
     return Response.json('ok', {status:200});
