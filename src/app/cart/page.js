@@ -43,21 +43,21 @@ export default function CartPage(){
     async function proceedToCheckout(ev){
         ev.preventDefault();
         //Grab address and cart items 
-        const response = await fetch('/api/checkout',{
+          const response = await fetch('/api/checkout',{
             method: 'POST',
-            headers:{'Content-type:':'appliction/json'},
+            headers: {'Content-Type':'appliction/json'},
             body: JSON.stringify({
                 address,
                 cartProducts,
             }),
 
-        });
-        const link = response.json();
-       // window.location = link;
+        }); 
+      //  const link = await response.json();
+      // window.location = link; 
         // then redirect to Stripe
        
     }
-   // console.log({cartProducts});
+    console.log({cartProducts});
 
 
     return (
@@ -114,7 +114,7 @@ export default function CartPage(){
                         Delivery: <br />
                         Total: 
                     </div>  
-                    <div className="text-lg font-semibold pl-2 text-right">
+                    <div className=" font-semibold pl-2 text-right">
                         ${subtotal} <br />
                         $5<br />
                         ${subtotal + 5} <br/>
