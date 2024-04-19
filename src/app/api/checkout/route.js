@@ -7,6 +7,7 @@ const stripe = require('stripe')(process.env.STRIPE_SK);
 
 export async function POST(req){
     mongoose.connect(process.env.MONGO_URL);
+   
 
     const {cartProducts, address}= await req.json();
     const session = await getServerSession(authOptions);
@@ -53,18 +54,21 @@ export async function POST(req){
         },
       });
     }
-    console.log({stripeLineItems});
-    return Response.json(null);
+   
+    
 
-/*
-const stripeSession =await stripe.checkout.sessions.create({
+
+    const stripeSession = await stripe.checkout.sessions.create({
     line_items: stripeLineItems,
     mode: 'payment',
     customer_email: userEmail,
     success_url: process.env.NEXTAUTH_URL + 'cart?success=1',
     cancel_url: process.env.NEXTAUTH_URL + 'cart?canceled=1',
-    metadata:{orderId: orderDoc._id},
-    shipping_option:[
+    metadata: {orderId:orderDoc._id.toString()},
+    payment_intent_data: {
+      metadata:{orderId:orderDoc._id.toString()},
+    },
+    shipping_options:[
         {
             shipping_rate_data: {
                 display_name :'Delivery fee',
@@ -74,5 +78,6 @@ const stripeSession =await stripe.checkout.sessions.create({
             },
         }
     ]
-}); */ 
+}); 
+    return Response.json(stripeSession.url);
 }

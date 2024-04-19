@@ -6,6 +6,7 @@ import Image from "next/image";
 import Trash from "@/components/icons/Trash";
 import AddressInputs from "@/components/layout/AddressInputs";
 import { useProfile } from "@/components/UseProfile";
+import toast from "react-hot-toast";
 
 
 export default function CartPage(){
@@ -43,19 +44,32 @@ export default function CartPage(){
     async function proceedToCheckout(ev){
         ev.preventDefault();
         //Grab address and cart items 
-          const response = await fetch('/api/checkout',{
-            method: 'POST',
-            headers: {'Content-Type':'appliction/json'},
-            body: JSON.stringify({
-                address,
-                cartProducts,
-            }),
+        const promise = new Promise((resolve,reject)=>{
+            fetch('/api/checkout',{
+                method: 'POST',
+                headers: {'Content-Type':'appliction/json'},
+                body: JSON.stringify({
+                    address,
+                    cartProducts,
+                }),
+    
+            }). then(async(response) =>{
+                if(response.ok){
+                    resolve();
+                    window.location  = await response.json();
+                }
+                else{
+                    reject();
+                }
+               
+            }); 
+        });
+        toast.promise(promise,{
+            loading:'Preparing your order',
+            success:'Redirecting to payment',
+            error:'Something went wrong...'
+        })
 
-        }); 
-      //  const link = await response.json();
-      // window.location = link; 
-        // then redirect to Stripe
-       
     }
     console.log({cartProducts});
 
