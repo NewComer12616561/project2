@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { MenuItem } from "../menu/MenuItem";
-import SectionHeader from "./SectionHeaders";
+import SectionHeaders from "./SectionHeaders";
 import { useEffect ,useState } from "react";
 
 
@@ -35,7 +35,7 @@ export default function HomeMenu(){
     </div>
         
         <div className="text-center mb-4">
-      <SectionHeader
+      <SectionHeaders
       subHeader={'check out'}
       mainHeader={'Best Sellers'}/>
         </div>

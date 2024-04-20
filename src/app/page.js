@@ -1,7 +1,7 @@
 
 import Hero from "../components/layout/Hero";
 import HomeMenu from "../components/layout/HomeMenu";
-import SectionHeader from "../components/layout/SectionHeaders";
+import SectionHeaders from "../components/layout/SectionHeaders";
 
 
 
@@ -12,7 +12,7 @@ export default function Home() {
   <Hero/>
   <HomeMenu />
   <section className="text-center my-16 " id="about">
-    <SectionHeader
+    <SectionHeaders
     subHeader={'Our story'}
     mainHeader={'About us'} />
    
@@ -26,7 +26,7 @@ export default function Home() {
   </section>
   
   <section className="text-center my-8" id="contact">
-    <SectionHeader
+    <SectionHeaders
     subHeader={'Don\'t hesitate'}
     mainHeader={'Contact us'} />
     

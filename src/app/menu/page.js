@@ -1,6 +1,6 @@
 'use client';
 
-import SectionHeader from "@/components/layout/SectionHeaders";
+import SectionHeaders from "@/components/layout/SectionHeaders";
 import { MenuItem } from "@/components/menu/MenuItem";
 import { useEffect, useState } from "react"
 
@@ -22,7 +22,7 @@ export default function MenuPage(){
       {categories?.length > 0 && categories.map(c =>(
       <div>
          <div className="text-center">
-            <SectionHeader mainHeader={c.name} />
+            <SectionHeaders mainHeader={c.name} />
          </div>
          <div className="grid grid-cols-3 gap-4 mt-6 mb-12">
          {menuItems.filter(m =>m.category === c._id).map(item => (

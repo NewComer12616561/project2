@@ -14,6 +14,14 @@ export default function CartPage(){
     const {data:profileData} =useProfile();
     const [ address,setAddress] =useState({});
 
+    useEffect(()=> {
+        if(typeof window !== 'undefined'){
+            if(window.location.href.includes('canceled=1')){
+                toast.error('Payment failed :/')
+            }
+        }
+    }, []);
+
 
 
   useEffect(() => {
@@ -71,7 +79,15 @@ export default function CartPage(){
         })
 
     }
-    console.log({cartProducts});
+  
+    if(cartProducts?.length === 0 ){
+        return (
+            <section className="mt-8">
+                <SectionHeaders mainHeader="Cart" />
+                <p className="mt-4">Your cart is empty😂</p>
+            </section>
+        )
+    }
 
 
     return (
