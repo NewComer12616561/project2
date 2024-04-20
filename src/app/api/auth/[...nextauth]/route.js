@@ -10,6 +10,9 @@ import clientPromise from "/src/libs/mongoConnect"
 export const authOptions = {
   secret: process.env.SECRET,
   adapter: MongoDBAdapter(clientPromise),
+  session:{
+    stragety:"jwt",
+  }, 
   providers: [
     
     
