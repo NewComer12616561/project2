@@ -25,11 +25,8 @@ export async function GET(req){
       }
     
       if (userEmail) {
-        const userInfo = await UserInfo.findOne({email:userEmail});
-        if(userInfo){
-            isAdmin = userInfo.admin;
-        }
-        //return Response.json( await Order.find({userEmail}) );
+      
+        return Response.json( await Order.find({userEmail}) );
       }
 
 }

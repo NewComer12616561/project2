@@ -16,10 +16,12 @@ export function UserTabs({isAdmin}){
                 href={'/menu-items'}>Menu items</Link>
                 <Link className={path.includes('/users')  ? 'active' : ''}
                 href={'/users'}>Users</Link>
-                <Link className={path ==='/orders' ? 'active' : ''}
-                href={'/orders'}>Orders</Link>
+               
                 </>
+               
             )}
+              <Link className={path ==='/orders' ? 'active' : ''}
+                 href={'/orders'}>Orders</Link>
          </div>
     );
 }
