@@ -11,7 +11,7 @@ export const authOptions = {
   secret: process.env.SECRET,
   adapter: MongoDBAdapter(clientPromise),
   session:{
-    stragety:"jwt",
+    strategy:"jwt",
   }, 
   providers: [
     
