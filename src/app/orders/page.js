@@ -12,11 +12,13 @@ export default function OrdersPage(){
     const [orders, setOrders] = useState([]);
     const [loadingOrders, setLoadingOrders] = useState(true);
     const {loading, data:profile} = useProfile();
+    
     useEffect(()=>{
        fetchOrders();
     },[]);
     
     function fetchOrders(){
+        setLoadingOrders(true);
         fetch('/api/orders').then(res => {
             
             res.json().then(orders =>{
