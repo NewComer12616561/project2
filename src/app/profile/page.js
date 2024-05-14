@@ -43,7 +43,7 @@ export default function ProfilePage(){
         else 
          reject();
         });
-        toast.promise(
+        await toast.promise(
             
             savingPromise, {
             loading:'Saving...',
