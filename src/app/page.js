@@ -18,9 +18,9 @@ export default function Home() {
    
     <div className="text-gray-500 max-w-md mx-auto mt-4 
     flex flex-col gap-4">
-    <p>text text text text text text page.js line 21 </p>
-    <p>Blah blah blah page.js line 22</p>
-    <p>Blah blah blah page.js line 23</p>
+    <p>This is a food ordering website</p>
+    <p>Some of the feature in this website include:</p>
+    <p>ordering food from menu or recommendation in homepage, payment for said food, cart,... </p>
     </div>
 
   </section>
