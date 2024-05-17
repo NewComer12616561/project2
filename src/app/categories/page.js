@@ -121,7 +121,7 @@ export default function CategoriesPage(){
             </form>
             <ul>
             <div>
-                <h2 className="mt-8 text-sm text-gray-500">All existing category:</h2>
+                <h2 className="mt-8 text-sm text-gray-500">Existing category:</h2>
                 {categories?.length >0 && categories.map(c =>(
                     <div 
                     className="bg-gray-100 rounded-xl p-2 px-4 flex gap-1
