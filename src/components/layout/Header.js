@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useContext } from "react";
@@ -11,22 +11,28 @@ export default function Header() {
   const status = session?.status;
   const userData = session.data?.user;
   let userName = userData?.name || userData?.email;
-  const {cartProducts} = useContext(CartContext);
   if (userName && userName.includes(' ')) {
     userName = userName.split(' ')[0];
   }
 
+  const { cartProducts } = useContext(CartContext);
+
   const handleLogout = async () => {
-    await signOut();
-    // Redirect to login or homepage after logout
-    router.push('/login'); // Replace with your desired redirection route
+    try {
+      await signOut();
+      // Redirect to login or homepage after logout
+      router.push('/login'); // Replace with your desired redirection route
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Handle logout error gracefully, e.g., display an error message
+    }
   };
 
   return (
     <header className="flex items-center justify-between">
       <nav className="flex items-center gap-8 text-gray-500 semibold">
         <Link className="text-primary font-semibold " href="/">
-         FOOD STORE
+          FOOD STORE
         </Link>
         <Link href="/">Home</Link>
         <Link href="/menu">Menu</Link>
@@ -59,7 +65,7 @@ export default function Header() {
           <ShoppingCart />
           {cartProducts?.length > 0 && (
             <span className="absolute -top-2 -right-4 bg-primary text-white text-xs py-1 px-1 rounded-full leading-3">
-              {/* Number of items in cart */}
+              {cartProducts.length}
             </span>
           )}
         </Link>
