@@ -5,6 +5,8 @@ import { useParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import AddressInputs from "@/components/layout/AddressInputs"
 import CartProduct from "@/components/menu/CartProduct";
+import Link from "next/link";
+import Left from "@/components/icons/Left";
 
 export default function OrderPage(){
     const {clearCart} =useContext(CartContext);
@@ -43,6 +45,9 @@ export default function OrderPage(){
         <section className="max-w-2xl mx-auto text-center mt-8">
             <div className="text-center">
             <SectionHeaders  mainHeader="Your order"/>
+            <Link href={'/orders'} className="button mt-8">
+                <Left/><span>Return to Orders page </span> 
+            </Link>
             <div className="my-4">
                 <p>Thank for ordering</p>
                 <p>We will call you when we arrived</p>
