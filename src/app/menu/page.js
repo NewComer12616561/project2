@@ -39,7 +39,8 @@ export default function MenuPage() {
         <input
           type="text"
           placeholder="Search menu items(name, desc, category)..."
-          className="text-gray-700 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          className="text-gray-700 px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 "
+          style={{ width: "75%" }}
           onChange={handleSearchChange}
         />
       </div>
